@@ -1,14 +1,4 @@
 import random
-avalible_games = {"blackjack"}
-
-def enter_money():
-    money = int(input("How much money would you like to deposit: "))
-    return money
-def what_game(avalible_games):
-    print(f"Avalible games for now are:\n {avalible_games}")
-    game = input("What game would you like to play: ")
-    return game.lower()
-
 def black_jack(money):
     pass_user = True
     your_points = 0
@@ -53,24 +43,3 @@ def black_jack(money):
                 pass_user = True
     print(f"You won {money / 2}$")
     return money
-def main():
-    money = enter_money()
-    choice_game = True
-    while choice_game:
-        game = what_game(avalible_games)
-        if game in avalible_games:
-            # In progress
-            choice_game = False
-        else:
-            print("Invalid game. Please choice again")
-            game = ""
-        if game == "blackjack":
-            bet_money = int(input("How much money would you like to bet"))
-            money -= bet_money
-            money += black_jack(bet_money)
-            print(f"Your entire money is: {money}")
-            
-main()
-            
-    
-        
