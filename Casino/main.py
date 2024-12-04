@@ -19,6 +19,7 @@ def another_round():
         another = False
     else:
         another = True
+    return another
 
 def main():
     money = enter_money()
@@ -51,7 +52,7 @@ def main():
             run = another_round()
             
         elif game == "slotmachine":
-            slot_machine(money)
+            money = slot_machine(money)
             print(f"Your total money is {money}")
             run = another_round()
         elif game == "poker":
