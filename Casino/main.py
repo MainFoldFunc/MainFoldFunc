@@ -2,7 +2,8 @@ import random
 from blackjack import black_jack
 from slot_machine import slot_machine
 from russrulete import rulette
-avalible_games = {"blackjack", "roulette", "slotmachine"}
+from poker import poker
+avalible_games = {"blackjack", "roulette", "slotmachine", "poker"}
 
 def enter_money():
     money = int(input("How much money would you like to deposit: "))
@@ -52,6 +53,10 @@ def main():
         elif game == "slotmachine":
             slot_machine(money)
             print(f"Your total money is {money}")
+            run = another_round()
+        elif game == "poker":
+            money = poker(money)
+            print(F"Your total money is {money}")
             run = another_round()
                 
             
