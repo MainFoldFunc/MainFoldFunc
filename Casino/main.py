@@ -1,7 +1,8 @@
 import random
 from blackjack import black_jack
+from slot_machine import slot_machine
 from russrulete import rulette
-avalible_games = {"blackjack", "roulette"}
+avalible_games = {"blackjack", "roulette", "slotmachine"}
 
 def enter_money():
     money = int(input("How much money would you like to deposit: "))
@@ -11,8 +12,18 @@ def what_game(avalible_games):
     game = input("What game would you like to play: ")
     return game.lower()
 
+def another_round():
+    another = input("Do you want to play another game: ").lower()
+    if another != "yes":
+        another = False
+    else:
+        another = True
+
 def main():
     money = enter_money()
+    help_q = input("Do you want any help about games: ").lower()
+    if help_q == "yes":
+        help(avalible_games)
     choice_game = True
     run = True
     while run:
@@ -25,26 +36,23 @@ def main():
                 print("Invalid game. Please choice again")
                 game = ""
                 
-            if game == "blackjack":
-                bet_money = int(input("How much money would you like to bet"))
-                money -= bet_money
-                money += black_jack(bet_money)
-                print(f"Your entire money is: {money}")
-                if run == "yes":
-                    continue
-                else:
-                    input("Goodbye press any kee to escape.")
-                    break
-                
-            elif game == "roulette":
-                money == rulette(money)
-                print(f"Your total money is {money}")
-                run = input("Do you want to play again: ").lower()
-                if run == "yes":
-                    continue
-                else:
-                    input("Goodbye press any kee to escape.")
-                    break
+        if game == "blackjack":
+            bet_money = int(input("How much money would you like to bet"))
+            money -= bet_money
+            money += black_jack(bet_money)
+            print(f"Your entire money is: {money}")
+            run = another_round()
+    
+        elif game == "roulette":
+            money == rulette(money)
+            print(f"Your total money is {money}")
+            run = input("Do you want to play again: ").lower()
+            run = another_round()
+            
+        elif game == "slotmachine":
+            slot_machine(money)
+            print(f"Your total money is {money}")
+            run = another_round()
                 
             
 main()
