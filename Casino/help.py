@@ -25,13 +25,15 @@ def help_casino(games):
                 print("In this game you deposite some money and spin the whell")
                 print("If there are 3 # or $ or @ in a row you double your money")
                 print("If there aren't your money is zeroed.")
+                help_l = False
             elif wich_game == "poker":
                     print("This is a mini version of poker")
                     print("Four pleayers loss some cards and the on with the best deck wins.")
-                    print("The decks are visible at: https://pl.wikipedia.org/wiki/Poker")
-                
+                    print("The decks are visible at: https://pl.wikipedia.org/wiki/Poker")       
+                    help_l = False
 
-        else:
-            print("Print this game is not in avalible in our casino.")
-            help_l = True
+
+            else:
+                print("Print this game is not in avalible in our casino.")
+                help_l = True
 
