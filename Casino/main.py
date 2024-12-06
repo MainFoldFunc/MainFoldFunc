@@ -3,6 +3,7 @@ from blackjack import black_jack
 from slot_machine import slot_machine
 from russrulete import rulette
 from poker import poker
+from help import help_casino
 avalible_games = {"blackjack", "roulette", "slotmachine", "poker"}
 
 def enter_money():
@@ -25,7 +26,7 @@ def main():
     money = enter_money()
     help_q = input("Do you want any help about games: ").lower()
     if help_q == "yes":
-        help(avalible_games)
+        help_casino(avalible_games)
     choice_game = True
     run = True
     while run:

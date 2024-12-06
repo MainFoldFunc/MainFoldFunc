@@ -1,9 +1,9 @@
-def help(games):
+def help_casino(games):
     print("------ WELCOME TO THE CASINO ------")
     print(f"There are only 2 games for now:\n{games}")
     help_l = True
     while help_l:
-        wich_game = input("To wich game would you like some help: \n\n").lower()
+        wich_game = input("To wich game would you like some help: ").lower()
         if wich_game in games:
             if wich_game == "blackjack":
                 print("In this game you are playing against the dealer")
@@ -21,6 +21,15 @@ def help(games):
                 print("When pleayer correctly guesse a odd or even number his money is multiplicated by 2.")
                 print("When pleyer losses his money that he put in is erresed.")
                 help_l = False
+            elif wich_game == "slotmachine":
+                print("In this game you deposite some money and spin the whell")
+                print("If there are 3 # or $ or @ in a row you double your money")
+                print("If there aren't your money is zeroed.")
+            elif wich_game == "poker":
+                    print("This is a mini version of poker")
+                    print("Four pleayers loss some cards and the on with the best deck wins.")
+                    print("The decks are visible at: https://pl.wikipedia.org/wiki/Poker")
+                
 
         else:
             print("Print this game is not in avalible in our casino.")
