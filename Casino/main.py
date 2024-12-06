@@ -32,13 +32,6 @@ def main():
     while run:
         while choice_game:
             game = what_game(avalible_games)
-            if game in avalible_games:
-                # In progress
-                choice_game = False
-            else:
-                print("Invalid game. Please choice again")
-                game = ""
-                
         if game == "blackjack":
             bet_money = int(input("How much money would you like to bet"))
             money -= bet_money
@@ -60,7 +53,10 @@ def main():
             money = poker(money)
             print(F"Your total money is {money}")
             run = another_round()
-                
+        else:
+            print("Invalid game. Please choice again")
+            game = ""
+                        
             
 main()
             
