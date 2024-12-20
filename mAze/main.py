@@ -58,60 +58,78 @@ def looking_for_element_in_list(maze: list, element: str) -> tuple:
             return i, row.index(element)
     return -1, -1  # Return invalid index if not found
 
-def replace_up(maze: list, player_pos: tuple) -> list:
+
+
+def replace_up(maze: list, player_pos: tuple) -> tuple:
     row, col = player_pos
     try:
         if row > 0 and maze[row - 1][col] != "#":  # Check if the player can move up
-            # Move the player
-            maze[row][col] = "*"
-            maze[row - 1][col] = "&"
-
+            # First check if the new position is the goal
+            if maze[row - 1][col] == "@":  # Win condition check
+                return maze, True  # Return updated maze and True if won
+            
+            # If it's not the goal, move the player
+            maze[row][col] = "*"  # Remove player from the current position
+            maze[row - 1][col] = "&"  # Place player at the new position
     except:
-        print(f"You can't go out of bounds")
-    return maze
+        print("You can't go out of bounds")
+    return maze, False  # No win, return False
 
-def replace_down(maze: list, player_pos: tuple) -> list:
+def replace_down(maze: list, player_pos: tuple) -> tuple:
     row, col = player_pos
     try:
-        if row > 0 and maze[row + 1][col] != "#":  # Check if the player can move up
-            # Move the player
-            maze[row][col] = "*"
-            maze[row + 1][col] = "&"
+        if row < len(maze) - 1 and maze[row + 1][col] != "#":  # Check if the player can move down
+            # First check if the new position is the goal
+            if maze[row + 1][col] == "@":  # Win condition check
+                return maze, True  # Return updated maze and True if won
+            
+            # If it's not the goal, move the player
+            maze[row][col] = "*"  # Remove player from the current position
+            maze[row + 1][col] = "&"  # Place player at the new position
     except:
-        print(f"You can't go out of bounds")
-    return maze
+        print("You can't go out of bounds")
+    return maze, False  # No win, return False
 
-def replace_right(maze: list, player_pos: tuple) -> list:
+def replace_right(maze: list, player_pos: tuple) -> tuple:
     row, col = player_pos
     try:
-        if row > 0 and maze[row][col + 1] != "#":  # Check if the player can move up
-            # Move the player
-            maze[row][col] = "*"
-            maze[row][col + 1] = "&"
+        if col < len(maze[row]) - 1 and maze[row][col + 1] != "#":  # Check if the player can move right
+            # First check if the new position is the goal
+            if maze[row][col + 1] == "@":  # Win condition check
+                return maze, True  # Return updated maze and True if won
+            
+            # If it's not the goal, move the player
+            maze[row][col] = "*"  # Remove player from the current position
+            maze[row][col + 1] = "&"  # Place player at the new position
     except:
-        print(f"You can't go out of bounds")
-    return maze
+        print("You can't go out of bounds")
+    return maze, False  # No win, return False
 
-def replace_left(maze: list, player_pos: tuple) -> list:
+def replace_left(maze: list, player_pos: tuple) -> tuple:
     row, col = player_pos
     try:
-        if row > 0 and maze[row][col - 1] != "#":  # Check if the player can move up
-            # Move the player
-            maze[row][col] = "*"
-            maze[row][col - 1] = "&"
+        if col > 0 and maze[row][col - 1] != "#":  # Check if the player can move left
+            # First check if the new position is the goal
+            if maze[row][col - 1] == "@":  # Win condition check
+                return maze, True  # Return updated maze and True if won
+            
+            # If it's not the goal, move the player
+            maze[row][col] = "*"  # Remove player from the current position
+            maze[row][col - 1] = "&"  # Place player at the new position
     except:
-        print("You can't go out of bands")
-    return maze
+        print("You can't go out of bounds")
+    return maze, False  # No win, return False
+
+
 
 def game_loop(level: int, levels: list):
-    player = "&"
-    end = "@"
-    block = "#"
-    space = "*"
-    copy_map = levels[level]
     game_looping = True
-
+    player = "&"
+    won = "@"
     while game_looping:
+        copy_map = levels[level]  # Get the maze for the current level
+
+        # Display the map at the start of each loop iteration
         print(f"This is map: \n")
         for row in copy_map:
             print(" ".join(row))
@@ -125,28 +143,37 @@ def game_loop(level: int, levels: list):
                 print("Player not found!")
                 break
 
+            # Move player and check for win condition
             if player_move == "up": 
-                copy_map = replace_up(copy_map, player_pos)
+                copy_map, won = replace_up(copy_map, player_pos)
+                player_bad = False
             elif player_move == "down":
-                copy_map = replace_down(copy_map, player_pos)
+                copy_map, won = replace_down(copy_map, player_pos)
+                player_bad = False
             elif player_move == "right":
-                copy_map = replace_right(copy_map, player_pos)
+                copy_map, won = replace_right(copy_map, player_pos)
+                player_bad = False
             elif player_move == "left":
-                copy_map = replace_left(copy_map, player_pos)
-            elif player_move == "exit":
-                print(f"Goodbye")
-                game_looping = False
+                copy_map, won = replace_left(copy_map, player_pos)
                 player_bad = False
             else:
                 print("No such move!")
                 player_bad = True
 
-            # Check if the player reached the end (@) tile
-            player_pos = looking_for_element_in_list(copy_map, player)
-            if copy_map[player_pos[0]][player_pos[1]] == end:
+            # Check if the player won
+            if won:
                 print("You won!")
-                game_looping = False
-                player_bad = False
+                again = input("Do you want to play again (y/n)? ").lower()
+                if again == "y":
+                    # Let the player select a new level after winning
+                    level = level_to_play(mazes)
+                    game_looping = False  # Exit the current loop so it restarts with the new level
+                    break
+                else:
+                    print(f"Thanks for playing!")
+                    game_looping = False  # Exit the loop if the player doesn't want to play again
+                    break
+
 def main():
     welcome(mazes)
     level = level_to_play(mazes)

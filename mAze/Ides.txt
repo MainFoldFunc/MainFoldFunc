@@ -17,3 +17,13 @@ Player:
 	If level ends (player got to the @ sign)
 	cmd displayes: congrats you did this in x moves
 	and asks to display another level.
+
+Notes for 21.12:
+
+Bugs:
+When you select new level program ends
+When you do a incorrect move next to the win it says you won
+
+Something to add:
+Systemzie it and make it more than one file (for good measure)
+Maybe some enemies AI but it will be very hard (I will try it)
