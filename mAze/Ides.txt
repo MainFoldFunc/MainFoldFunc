@@ -1,0 +1,19 @@
+Program have some levels like this:
+{
+	" * * * * @ * * ** 
+	 *###*###*
+	*###&###*
+}
+Where:
+- *  is a free space where you can move
+- # is a blocked space where you can't move
+-@ is an end of the level (exit)
+-& is player
+
+Player:
+	Player can move up, down, right and left.
+	He moves by entering up, down, right, left on to terminal
+	if he goes to # cmd displays: you can go there
+	If level ends (player got to the @ sign)
+	cmd displayes: congrats you did this in x moves
+	and asks to display another level.
