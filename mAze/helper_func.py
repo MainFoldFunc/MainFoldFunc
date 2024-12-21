@@ -1,11 +1,8 @@
 import time
-from blessed import Terminal  # Replace curses with blessed
 from Mazes import mazes  # Assuming you have your maze data in this file
 
-term = Terminal()
-
 def welcome(levels: list):
-    print(term.bold("            ------ Mazemania ------\n"))
+    print("            ------ Mazemania ------\n")
     print(f"For now, there are only {len(levels)} available levels.\n")
     print("You move by entering these commands using arrow keys.\n")
     print("Have a great time!\n")
@@ -69,13 +66,11 @@ def replace_left(maze: list, player_pos: tuple) -> tuple:
 def won(timer_start):
     """Function to show winning message and time taken."""
     timer_end = time.time()
-    print(term.clear())
     print("\nYou won!\n")
     print(f"It took you {timer_end - timer_start:.2f} seconds to beat this level.\n")
     print("Press 'y' to play again or any other key to quit: ")
 
 def display_maze(maze):
-    print(term.clear())
     for row in maze:
         print(" ".join(row))
 
@@ -85,39 +80,40 @@ def game_loop(level: int, levels: list):
     maze = [list(row) for row in levels[level]]  # Copy the maze to modify
     timer_start = time.time()
 
-    with term.cbreak():
-        while True:
-            # Display the maze dynamically
-            display_maze(maze)
+    while True:
+        # Display the maze
+        display_maze(maze)
 
-            # Get player's position
-            player_pos = looking_for_element_in_list(maze, player)
-            if player_pos == (-1, -1):
-                print("\nPlayer not found! Exiting...\n")
-                time.sleep(2)
+        # Get player's position
+        player_pos = looking_for_element_in_list(maze, player)
+        if player_pos == (-1, -1):
+            print("\nPlayer not found! Exiting...\n")
+            time.sleep(2)
+            break
+
+        # Get user input for movement
+        key = input("Enter your move (w/a/s/d for up/left/down/right, q to quit): ").strip().lower()
+        
+        if key == 'w':
+            maze, won_flag = replace_up(maze, player_pos)
+        elif key == 's':
+            maze, won_flag = replace_down(maze, player_pos)
+        elif key == 'a':
+            maze, won_flag = replace_left(maze, player_pos)
+        elif key == 'd':
+            maze, won_flag = replace_right(maze, player_pos)
+        elif key == 'q':  # Quit if the user presses 'q'
+            break
+
+        # Check for win condition after each move
+        if won_flag:
+            won(timer_start)
+            key = input().strip().lower()
+            if key == 'y':
+                level = level_to_play(levels)
+                maze = [list(row) for row in levels[level]]
+                timer_start = time.time()
+            else:
                 break
 
-            # Get user input for movement
-            key = term.inkey(timeout=0.1)
-            
-            if key.code == term.KEY_UP:
-                maze, won_flag = replace_up(maze, player_pos)
-            elif key.code == term.KEY_DOWN:
-                maze, won_flag = replace_down(maze, player_pos)
-            elif key.code == term.KEY_LEFT:
-                maze, won_flag = replace_left(maze, player_pos)
-            elif key.code == term.KEY_RIGHT:
-                maze, won_flag = replace_right(maze, player_pos)
-            elif key.lower() == 'q':  # Quit if the user presses 'q'
-                break
-
-            # Check for win condition after each move
-            if won_flag:
-                won(timer_start)
-                key = term.inkey()
-                if key.lower() == 'y':
-                    level = level_to_play(levels)
-                    maze = [list(row) for row in levels[level]]
-                    timer_start = time.time()
-                else:
-                    break
+        time.sleep(0.1)  # Small delay to control game speed
