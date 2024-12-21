@@ -1,7 +1,5 @@
 from Mazes import mazes
-from helper_func import welcome
-from helper_func import level_to_play
-from helper_func import game_loop
+from helper_func import welcome, level_to_play, game_loop
 
 def main():
     welcome(mazes)
