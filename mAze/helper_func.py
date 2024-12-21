@@ -1,3 +1,5 @@
+import time
+from Mazes import mazes
 def welcome(levels: list):
     print(f"            ------ Mazemania ------\n")
     print(f"For now, there are only {len(levels)} available levels.\n")
@@ -95,6 +97,8 @@ def game_loop(level: int, levels: list):
     game_looping = True
     player = "&"
     won = "@"
+    timer_start = time.time()
+
     while game_looping:
         copy_map = levels[level]  # Get the maze for the current level
 
@@ -131,11 +135,16 @@ def game_loop(level: int, levels: list):
 
     # Check if the player won
         if won:
+            timer_end = time.time()
             print("You won!")
+            print(f"It took you {timer_end - timer_start:.2f} seconds to beat this level")
+            timer_start = time.time()
             again = input("Do you want to play again (y/n)? ").lower()
             if again == "y":
                 # Let the player select a new level after winning
                 level = level_to_play(mazes)
+                timer_start = time.time()
+
                 game_looping = True  # Exit the current loop so it restarts with the new level
                 continue
             else:

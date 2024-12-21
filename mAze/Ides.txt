@@ -26,4 +26,5 @@ dealt witn - When you do a incorrect move next to the win it says you won
 
 Something to add:
 done - Systemzie it and make it more than one file (for good measure)
+timer to measure how fast you did the level
 in progress - Maybe some enemies AI but it will be very hard (I will try it)
