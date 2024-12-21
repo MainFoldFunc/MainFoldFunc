@@ -21,9 +21,9 @@ Player:
 Notes for 21.12:
 
 Bugs:
-When you select new level program ends
-When you do a incorrect move next to the win it says you won
+dealt with - When you select new level program ends
+dealt witn - When you do a incorrect move next to the win it says you won
 
 Something to add:
-Systemzie it and make it more than one file (for good measure)
-Maybe some enemies AI but it will be very hard (I will try it)
+done - Systemzie it and make it more than one file (for good measure)
+in progress - Maybe some enemies AI but it will be very hard (I will try it)
