@@ -4,6 +4,8 @@ This function takes 2 argumnts:
 And returns a matrix that is a resoult of multiplication of those two.
 """
 def multiply_matrix(matrix_1, matrix_2j):
+    if not matrix_1 or not matrix_2:
+        raise Exception("You can't enter empty matrix")
     matrix_1_cols = len(matrix_1[0])
     matrix_2_cols = len(matrix_2[0])
     matrix_1_rows = len(matrix)
